@@ -20,6 +20,9 @@ int main() {
         return -1;
     }
 
+    std::cout << "Done.\n";
+    system("pause");
+
     return 0;
 }
 
