@@ -38,7 +38,7 @@ std::vector<std::string> get_cryptocurrency_types() {
             int end = temp.find(" Historical Data");
             if (end == std::string::npos) continue;
 
-            // 41 is based on Windows 10 family 家用版 21H2
+            // 41 is based on Windows 10 家用版 21H2
             cryptocurrency_types.push_back(temp.substr(41, end - 41));
         }
     }
