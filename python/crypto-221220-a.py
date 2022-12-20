@@ -294,20 +294,25 @@ class PostgresConnectionClass:
             self.conn = pg.connect(conn_str)
             self.cursor = self.conn.cursor()
 
-    # Get all crypto type as a list
+    # Get all crypto 回傳所有貨幣種類
     def getCryptoType(self):
         if not self.conn:
             return []
 
-        sql_query = 'SELECT DISTINCT type FROM cryptocurrency ORDER BY type'
-        # raise NotImplementedError
+        # == Need Implementation ===========================================
+        sql_query = 'Not Yet Implemented'
+        raise NotImplementedError
 
         self.cursor.execute(sql_query)
-        # self.cursor.execute("SELECT * FROM public.containment ORDER BY date ASC, country_code ASC LIMIT 100")
+        # ==================================================================
+
+        # self.cursor.execute("SELECT continent_name FROM continent LIMIT 100")
         cnames = self.cursor.fetchall()
-        # cnames = ['Bitcoin', 'Ethereum', 'Tether', 'Binance Coin']  # Test Data
+        # cnames = [['Bitcoin'], ['Ethereum'], ['Tether'], ['Binance Coin']]  # Test Data
+        cnames = [c[0] for c in cnames]
         return cnames
 
+    #
     def askCryptoType(self):
         if not self.conn:
             return []
@@ -320,15 +325,18 @@ class PostgresConnectionClass:
         cname = cnames[int(input())]
         return cname
 
+    # Get Historical Data 回傳指定日期間歷史資料
     def getHistoricalData(self, cname, sdate, edate):
         if not self.conn:
             return []
 
-        # 我如何知道依哪一行排序 ?
-        sql_query = 'SELECT * FROM cryptocurrency WHERE date between ' + sdate + ' and ' + edate + # 'ORDER BY ' + column
-        # raise NotImplementedError
+        # == Need Implementation ===========================================
+        sql_query = 'Not Yet Implemented'
+        raise NotImplementedError
 
         self.cursor.execute(sql_query)
+        # ==================================================================
+
         # self.cursor.execute("SELECT * FROM public.containment ORDER BY date ASC, country_code ASC LIMIT 100")
         data = self.cursor.fetchall()
         # data = [['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
@@ -359,9 +367,10 @@ class PostgresConnectionClass:
     def drawChart(self, cname, sdate, edate):
         if not self.conn:
             return
-
+        # == Need Implementation ===========================================
         raise NotImplementedError
-        pass
+
+        # ==================================================================
 
     # End Connection
     def endConnection(self):
