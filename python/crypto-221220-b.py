@@ -341,8 +341,9 @@ class PostgresConnectionClass:
 
         # 我如何知道依哪一行排序 ?
         # 還是現在這個 function 沒有依任意行排序的功能 ?
-        # 'ORDER BY ' + column
-        sql_query = 'SELECT * FROM cryptocurrency WHERE date between ' + sdate + ' and ' + edate +
+        sql_query = 'SELECT * FROM cryptocurrency WHERE date between ' + sdate + ' and ' + edate
+        # sql_query = 'SELECT * FROM cryptocurrency WHERE date between ' + sdate + ' and ' + edate + 'ORDER BY ' + column
+
         # raise NotImplementedError
 
         self.cursor.execute(sql_query)
