@@ -1,3 +1,8 @@
+// This is used for the first import.
+// It adds and fills 'Type' field to each record in all csv files which
+// are in the same directory as the exe file.
+// The result will be saved in '__output__.csv' without header row.
+
 #include <cmath>
 #include <string>
 #include <vector>
