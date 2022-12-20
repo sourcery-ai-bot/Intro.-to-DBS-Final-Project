@@ -10,11 +10,11 @@ def to_number(str):
 
 
 def remove_comma(str):
-    ans = ''
+    result = ''
     for i in str:
         if i != ',':
-            ans += i
-    return ans
+            result += i
+    return result
 
 
 # turn a list into valid form
@@ -22,7 +22,7 @@ def remove_comma(str):
 # line_validation(data) = ['Dec 18, 2022', '16717.0', '16777.0', '16797.3', '16666.5', 124180.0, -0.0036]
 def validate(list):
     for i in range(1, 5):
-        list[i] = remove_comma(list[i]) # Price, Open, High, Low
-    list[5] = to_number(list[5])        # Vol.
-    list[6] = remove_percent(list[6])   # Change
+        list[i] = remove_comma(list[i])     # Price, Open, High, Low
+    list[5] = to_number(list[5])            # Vol.
+    list[6] = remove_percent(list[6])       # Change
     return list
