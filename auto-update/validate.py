@@ -18,11 +18,11 @@ def remove_comma(str):
 
 
 # turn a list into valid form
-# data = ["Dec 18, 2022","16,717.0","16,777.0","16,797.3","16,666.5","124.18K","-0.36%"]
-# line_validation(data) = ['Dec 18, 2022', '16717.0', '16777.0', '16797.3', '16666.5', 124180.0, -0.0036]
+# data = ["Bitcoin","Dec 18, 2022","16,717.0","16,777.0","16,797.3","16,666.5","124.18K","-0.36%"]
+# validate(data) = ['Bitcoin', 'Dec 18, 2022', '16717.0', '16777.0', '16797.3', '16666.5', 124180.0, -0.0036]
 def validate(list):
-    for i in range(1, 5):
+    for i in range(2, 6):
         list[i] = remove_comma(list[i])     # Price, Open, High, Low
-    list[5] = to_number(list[5])            # Vol.
-    list[6] = remove_percent(list[6])       # Change
+    list[6] = to_number(list[6])            # Vol.
+    list[7] = remove_percent(list[7])       # Change
     return list
