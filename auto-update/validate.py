@@ -23,13 +23,11 @@ def remove_comma(str):
     return result
 
 
-'''
-turn a list into valid form
-data1 = ["Bitcoin","Dec 18, 2022","16,717.0","16,777.0","16,797.3","16,666.5","124.18K","-0.36%"]
-validate(data1) = ['Bitcoin', 'Dec 18, 2022', '16717.0', '16777.0', '16797.3', '16666.5', 124180.0, -0.0036]
-data2 = ["Bitcoin", "Dec 18, 2022", "16,717.0","16,777.0", "-", "16,666.5", "-", "-"]
-validate(data2) = ['Bitcoin', 'Dec 18, 2022', '16717.0', '16777.0', 'null', '16666.5', 'null', 'null']
-'''
+# turn a list into valid form
+# data1 = ["Bitcoin","Dec 18, 2022","16,717.0","16,777.0","16,797.3","16,666.5","124.18K","-0.36%"]
+# validate(data1) = ['Bitcoin', 'Dec 18, 2022', '16717.0', '16777.0', '16797.3', '16666.5', 124180.0, -0.0036]
+# data2 = ["Bitcoin", "Dec 18, 2022", "16,717.0","16,777.0", "-", "16,666.5", "-", "-"]
+# validate(data2) = ['Bitcoin', 'Dec 18, 2022', '16717.0', '16777.0', 'null', '16666.5', 'null', 'null']
 
 
 def validate(list):
