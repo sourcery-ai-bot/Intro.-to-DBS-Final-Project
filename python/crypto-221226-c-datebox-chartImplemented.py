@@ -12,8 +12,6 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QGr
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
-import datetime
-
 parser = argparse.ArgumentParser()
 app_type = parser.add_mutually_exclusive_group()
 app_type.add_argument('-cmd', dest='cmd',
@@ -183,14 +181,14 @@ class ChartTab(QWidget):
         self.layout.addWidget(self.cb_cname, 0, 1)
 
         self.label_sdate = QLabel('Start Date')
-        self.lineEdit_sdate = QLineEdit(text=str(datetime.date.today() - datetime.timedelta(days=30)))
-        self.lineEdit_sdate.setPlaceholderText(str(datetime.date.today() - datetime.timedelta(days=30)) + ' Start Date')
+        self.lineEdit_sdate = QLineEdit()
+        self.lineEdit_sdate.setPlaceholderText('2000-01-01 Start Date')
         self.layout.addWidget(self.label_sdate, 1, 0)
         self.layout.addWidget(self.lineEdit_sdate, 1, 1)
 
         self.label_edate = QLabel('End Date')
-        self.lineEdit_edate = QLineEdit(text=str(datetime.date.today()))
-        self.lineEdit_edate.setPlaceholderText(str(datetime.date.today()) + ' End Date')
+        self.lineEdit_edate = QLineEdit()
+        self.lineEdit_edate.setPlaceholderText('2000-01-01 End Date')
         self.layout.addWidget(self.label_edate, 2, 0)
         self.layout.addWidget(self.lineEdit_edate, 2, 1)
 
@@ -279,13 +277,11 @@ class HistoricalTab(QWidget):
 
         self.label_sdate = QLabel('Start Date')
         self.dateEdit_sdate = QDateEdit(calendarPopup=True)
-        self.dateEdit_sdate.setDate(datetime.date.today() - datetime.timedelta(days=30))
         self.layout.addWidget(self.label_sdate, 2, 0)
         self.layout.addWidget(self.dateEdit_sdate, 2, 1, 1, 2)
 
         self.label_edate = QLabel('End Date')
         self.dateEdit_edate = QDateEdit(calendarPopup=True)
-        self.dateEdit_edate.setDate(datetime.date.today())
         self.layout.addWidget(self.label_edate, 3, 0)
         self.layout.addWidget(self.dateEdit_edate, 3, 1, 1, 2)
 
