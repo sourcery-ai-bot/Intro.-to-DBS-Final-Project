@@ -20,16 +20,13 @@ class Updater:
     def update(self):
         self.lastDate = self.getLastDate()
         if datetime.date.today() > self.lastDate:
-            new_data = web_crawler2.crawl_first()
+            new_data = web_crawler2.crawl()
             if datetime.datetime.strptime(new_data[0][1], "%b %d, %Y").date() > self.lastDate:
-                new_data = web_crawler2.crawl()
                 for i in new_data:
                     record = validate.validate(i)
                     sql_query = f'INSERT INTO cryptocurrency VALUES ({record})'
                     self.cursor.execute(sql_query)
                 self.connection.commit()
-            else:
-                web_crawler2.driver.quit()
 
     def disconnect(self):
         self.cursor.close()

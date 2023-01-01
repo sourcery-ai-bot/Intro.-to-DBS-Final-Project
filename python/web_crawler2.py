@@ -64,8 +64,7 @@ def getList(i):
     tempt.append(change.text)
     return tempt
 
-
-def crawl_first():
+def crawl():
     driver.get("https://www.investing.com")
     # time.sleep(30)
     element = WebDriverWait(driver, 1000).until(
@@ -75,33 +74,14 @@ def crawl_first():
     driver.switch_to.default_content()
     time.sleep(1)
 
-    for i in range(1):
+    for i in range(20):
         switch_frame(table[i])
         tempt = getList(i)
         # print(datas.text)
         # for data in datas:
         #     tempt.append(data.text)
         db.append(tempt)
-
-    # for i in db:
-    #     print(i)
-
-    crawl_first_called = True
-    return db
-
-
-def crawl():
-    if not crawl_first_called:
-        crawl_first()
-
-    for i in range(1, 20):
-        switch_frame(table[i])
-        tempt = getList(i)
-        # print(datas.text)
-        # for data in datas:
-        #     tempt.append(data.text)
-        db.append(tempt)
-        print(i * 5, '%')
+        print(i * 5 + 5, '%')
 
     # for i in db:
     #     print(i)
