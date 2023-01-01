@@ -11,13 +11,17 @@ from webdriver_manager.chrome import ChromeDriverManager
 op = webdriver.ChromeOptions()
 op.add_argument('--ignore-certificate-errors-spki-list')
 op.add_argument('--ignore-certificate-errors')
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+op.add_argument("--headless")
+op.add_argument("--log-level=3")
+driver = webdriver.Chrome(service=Service(
+    ChromeDriverManager().install()), chrome_options=op)
 
 table = ["bitcoin", "usd-coin", "ethereum", "tether", "bnb", "binance-usd", "xrp", "dogecoin", "cardano", "polygon",
          "multi-collateral-dai", "polkadot-new", "tron", "litecoin", "shiba-inu", "solana", "uniswap", "avalanche", "unus-sed-leo", "wrapped-bitcoin"]
 mapping = ["Bitcoin", "USD Coin", "Ethereum", "Tether", "BNB", "Binance USD", "XRP", "Dogecoin", "Cardano", "Polygon",
            "Dai", "Polkadot", "TRON", "Litecoin", "Shiba Inu", "Solana", "Uniswap", "Avalanche", "UNUS SED LEO", "Wrapped Bitcoin"]
 db = []
+crawl_first_called = False
 
 
 def switch_frame(target_crypto):
@@ -35,17 +39,7 @@ def switch_frame(target_crypto):
     # time.sleep(1)
 
 
-driver.get("https://www.investing.com")
-# time.sleep(30)
-element = WebDriverWait(driver, 1000).until(
-    EC.element_to_be_clickable((By.CLASS_NAME, "popupCloseIcon"))
-)
-element.click()
-driver.switch_to.default_content()
-time.sleep(1)
-
-for i in range(20):
-    switch_frame(table[i])
+def getList(i):
     tempt = []
     tempt.append(mapping[i])
     # datas=driver.find_elements(By.XPATH,'//*[@id="curr_table"]/tbody/tr[1]')
@@ -70,12 +64,49 @@ for i in range(20):
     change = driver.find_element(
         By.XPATH, '/html/body/div[5]/section/div[7]/div[4]/table[1]/tbody/tr[1]/td[7]')
     tempt.append(change.text)
-    # print(datas.text)
-    # for data in datas:
-    #     tempt.append(data.text)
-    db.append(tempt)
+    return tempt
 
-for i in db:
-    print(i)
 
-driver.quit()
+def crawl_first():
+    driver.get("https://www.investing.com")
+    # time.sleep(30)
+    element = WebDriverWait(driver, 1000).until(
+        EC.element_to_be_clickable((By.CLASS_NAME, "popupCloseIcon"))
+    )
+    element.click()
+    driver.switch_to.default_content()
+    time.sleep(1)
+
+    for i in range(1):
+        switch_frame(table[i])
+        tempt = getList(i)
+        # print(datas.text)
+        # for data in datas:
+        #     tempt.append(data.text)
+        db.append(tempt)
+
+    # for i in db:
+    #     print(i)
+
+    crawl_first_called = True
+    return db
+
+
+def crawl():
+    if not crawl_first_called:
+        crawl_first()
+
+    for i in range(1, 20):
+        switch_frame(table[i])
+        tempt = getList(i)
+        # print(datas.text)
+        # for data in datas:
+        #     tempt.append(data.text)
+        db.append(tempt)
+        print(i * 5, '%')
+
+    # for i in db:
+    #     print(i)
+
+    driver.quit()
+    return db
