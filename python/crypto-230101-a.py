@@ -11,6 +11,8 @@ from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget, QGr
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
+import Updater
+
 host = 'dbfinalproject.cy4pbwrkxxik.us-east-1.rds.amazonaws.com'
 dbname = 'dbfinalproject'
 username = 'postgres'
@@ -67,6 +69,9 @@ class LoginWindow(QWidget):
         conn_str = f'host={host} dbname={dbname} user={a} password={b}'
         print(f'connecting to host {host}')
         PGC = PostgresConnectionClass(conn_str)
+        print('database updating')
+        u = Updater.Updater(PGC.conn, PGC.cursor)
+        u.update()
         print(f'connected to host {host}')
 
         self.deleteLater()
