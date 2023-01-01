@@ -11,8 +11,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 op = webdriver.ChromeOptions()
 op.add_argument('--ignore-certificate-errors-spki-list')
 op.add_argument('--ignore-certificate-errors')
-op.add_argument("--headless")
-op.add_argument("--log-level=3")
 driver = webdriver.Chrome(service=Service(
     ChromeDriverManager().install()), chrome_options=op)
 
