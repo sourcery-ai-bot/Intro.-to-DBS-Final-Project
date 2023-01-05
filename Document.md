@@ -79,7 +79,7 @@
         ```SQL:
         SELECT *
         FROM cryptocurrency
-        WHERE type = '{cname}' AND (date between '{sdate}' and '{edate}')
+        WHERE type = '{cname}' AND (date BETWEEN '{sdate}' AND '{edate}')
         ORDER BY {order} {dir}
         ```
         `{cname}`、`{sdate}`、`{edate}`、`{order}`、`{dir}` 為 Python 主程式中的 string variable，可供使用者決定下列幾項
