@@ -395,9 +395,9 @@ class PostgresConnectionClass:
             return []
 
         if order == 'None':
-            sql_query = f"SELECT * FROM cryptocurrency WHERE type = '{cname}' AND (date between '{sdate}' and '{edate}')"
+            sql_query = f"SELECT * FROM cryptocurrency WHERE type = '{cname}' AND (date BETWEEN '{sdate}' AND '{edate}')"
         else:
-            sql_query = f"SELECT * FROM cryptocurrency WHERE type = '{cname}' AND (date between '{sdate}' and '{edate}') ORDER BY {order} {dir}"
+            sql_query = f"SELECT * FROM cryptocurrency WHERE type = '{cname}' AND (date BETWEEN '{sdate}' AND '{edate}') ORDER BY {order} {dir}"
         self.cursor.execute(sql_query)
 
         data = self.cursor.fetchall()
