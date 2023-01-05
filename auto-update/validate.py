@@ -39,7 +39,7 @@ def list_to_string(input):
 
 
 def validate(input):
-    for i in range(2, 6):
+    for i in range(2, 8):
         input[i] = remove_comma(input[i])     # Price, Open, High, Low
     input[6] = to_number(input[6])            # Vol.
     input[7] = remove_percent(input[7])       # Change
