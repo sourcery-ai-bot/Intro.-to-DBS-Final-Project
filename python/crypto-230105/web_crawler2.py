@@ -52,8 +52,7 @@ def switch_frame(target_crypto):
 
 def getList(i):
     global driver
-    tempt = []
-    tempt.append(mapping[i])
+    tempt = [mapping[i]]
     # datas=driver.find_elements(By.XPATH,'//*[@id="curr_table"]/tbody/tr[1]')
     date = driver.find_element(
         By.XPATH, '/html/body/div[5]/section/div[7]/div[4]/table[1]/tbody/tr[1]/td[1]')

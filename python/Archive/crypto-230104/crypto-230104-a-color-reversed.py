@@ -159,19 +159,8 @@ class ChartTab(QWidget):
 
         xsdate = self.dateEdit_sdate.text()
         xedate = self.dateEdit_edate.text()
-        sdate = ''
-        edate = ''
-        for s in xsdate:
-            if s == '/':
-                sdate += '-'
-            else:
-                sdate += s
-        for e in xedate:
-            if e == '/':
-                edate += '-'
-            else:
-                edate += e
-
+        sdate = ''.join('-' if s == '/' else s for s in xsdate)
+        edate = ''.join('-' if e == '/' else e for e in xedate)
         ptype = self.cb_ptype.currentText()
 
         # PGC.drawChart(cname, sdate, edate)
@@ -187,20 +176,20 @@ class ChartTab(QWidget):
         df.set_index('date', inplace=True)
         df.drop(['name', 'vol', 'change'], axis=1, inplace=True)
 
-        width = 0.6
-        width2 = 0.1
-        up = df[df.close >= df.open]
-        down = df[df.close < df.open]
-        col1 = 'red'
-        col2 = 'green'
-
         if ptype == 'Candlestick':
+            width = 0.6
+            up = df[df.close >= df.open]
+            col1 = 'red'
             chart.bar(up.index, up.close - up.open,
                       width, bottom=up.open, color=col1)
+            width2 = 0.1
             chart.bar(up.index, up.high - up.close,
                       width2, bottom=up.close, color=col1)
             chart.bar(up.index, up.low - up.open,
                       width2, bottom=up.open, color=col1)
+
+            down = df[df.close < df.open]
+            col2 = 'green'
 
             chart.bar(down.index, down.close - down.open,
                       width, bottom=down.open, color=col2)
@@ -211,16 +200,14 @@ class ChartTab(QWidget):
             chart.set_title(f"{cname} Price")
             chart.tick_params(axis='both', which='minor', labelsize=6)
             chart.tick_params(axis='both', which='major', labelsize=6)
-            # chart.set_xticks(chart.get_xticks(),
-            #                  chart.get_xticklabels(), rotation=20, ha='right')
+                # chart.set_xticks(chart.get_xticks(),
+                #                  chart.get_xticklabels(), rotation=20, ha='right')
         else:
             chart.tick_params(axis='both', which='minor', labelsize=6)
             chart.tick_params(axis='both', which='major', labelsize=6)
             chart.plot((df.open + df.close) / 2)
 
         self.canvas.draw()
-
-        pass
 
 
 class HistoricalTab(QWidget):
@@ -277,19 +264,8 @@ class HistoricalTab(QWidget):
         cname = self.cb_cname.currentText()
         xsdate = self.dateEdit_sdate.text()
         xedate = self.dateEdit_edate.text()
-        sdate = ''
-        edate = ''
-        for s in xsdate:
-            if s == '/':
-                sdate += '-'
-            else:
-                sdate += s
-        for e in xedate:
-            if e == '/':
-                edate += '-'
-            else:
-                edate += e
-
+        sdate = ''.join('-' if s == '/' else s for s in xsdate)
+        edate = ''.join('-' if e == '/' else e for e in xedate)
         # print(f'{sdate} + {edate}')
         order = self.cb_orders.currentText()
         dir = self.cb_dirs.currentText()
@@ -311,7 +287,7 @@ class HistoricalTab(QWidget):
         self.table.setHorizontalHeaderLabels(self.orders)
         for r in range(rlen):
             for c in range(clen):
-                if not c == 0:
+                if c != 0:
                     self.table.setItem(
                         r, c - 1, QTableWidgetItem(str(data[r][c])))
                 # print(data[r][c])
@@ -380,8 +356,7 @@ class PostgresConnectionClass:
         for c in cnames:
             print(f'[{i}]{c}')
             i = i + 1
-        cname = cnames[int(input())]
-        return cname
+        return cnames[int(input())]
 
     # Get Historical Data 回傳指定日期間歷史資料
     def getHistoricalData(self, cname, sdate, edate, order='None', dir='None'):
@@ -394,8 +369,7 @@ class PostgresConnectionClass:
             sql_query = f"SELECT * FROM cryptocurrency WHERE type = '{cname}' AND (date between '{sdate}' and '{edate}') ORDER BY {order} {dir}"
         self.cursor.execute(sql_query)
 
-        data = self.cursor.fetchall()
-        return data
+        return self.cursor.fetchall()
 
     # End Connection
     def endConnection(self):

@@ -1,7 +1,5 @@
 def remove_percent(input):
-    if (input == '-'):
-        return 'null'
-    return float(input[:-1]) / 100
+    return 'null' if (input == '-') else float(input[:-1]) / 100
 
 
 def to_number(input):
@@ -14,21 +12,12 @@ def to_number(input):
 
 
 def remove_comma(input):
-    if (input == '-'):
-        return 'null'
-    result = ''
-    for i in input:
-        if i != ',':
-            result += i
-    return result
+    return 'null' if (input == '-') else ''.join(i for i in input if i != ',')
 
 
 def list_to_string(input):
-    output = ''
-    for i in input:
-        output += "'" + str(i) + "',"
-    output = output[:-1]
-    return output
+    output = ''.join(f"'{str(i)}'," for i in input)
+    return output[:-1]
 
 
 # turn a list into valid form

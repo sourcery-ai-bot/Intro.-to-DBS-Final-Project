@@ -201,7 +201,6 @@ class ChartTab(QWidget):
         edate = self.lineEdit_edate.text()
 
         PGC.drawChart(cname, sdate, edate)
-        pass
 
 
 class HistoricalTab(QWidget):
@@ -274,7 +273,7 @@ class HistoricalTab(QWidget):
         self.table.setHorizontalHeaderLabels(self.orders)
         for r in range(rlen):
             for c in range(clen):
-                if not c == 0:
+                if c != 0:
                     self.table.setItem(r, c - 1, QTableWidgetItem(str(data[r][c])))
                 # print(data[r][c])
 
@@ -348,8 +347,7 @@ class PostgresConnectionClass:
         for c in cnames:
             print(f'[{i}]{c}')
             i = i + 1
-        cname = cnames[int(input())]
-        return cname
+        return cnames[int(input())]
 
     # Get Historical Data 回傳指定日期間歷史資料
     def getHistoricalData(self, cname, sdate, edate, order='None', dir='None'):
@@ -365,12 +363,7 @@ class PostgresConnectionClass:
         # raise NotImplementedError
 
         self.cursor.execute(sql_query)
-        # ==================================================================
-
-        # self.cursor.execute("SELECT * FROM public.containment ORDER BY date ASC, country_code ASC LIMIT 100")
-        data = self.cursor.fetchall()
-        # data = [[]]  # Test Data
-        return data
+        return self.cursor.fetchall()
 
     # Draw Chart
     def drawChart(self, cname, sdate, edate):

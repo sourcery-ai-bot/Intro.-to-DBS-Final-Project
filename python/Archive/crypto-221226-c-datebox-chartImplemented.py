@@ -215,14 +215,14 @@ class ChartTab(QWidget):
         #=======draw chart=======
         self.figure.clf()
         chart = self.figure.add_subplot(111)
-        
+
         chart.clear()
 
         chartlist = PGC.getHistoricalData(cname,sdate,edate,'date','ASC')
         df = pd.DataFrame(chartlist,  columns = ['name', 'date', 'close', 'open', 'high', 'low', 'vol', 'change'])
         df.set_index('date', inplace = True)
         df.drop(['name','vol','change'], axis = 1, inplace = True)
-        
+
         width = 0.4
         width2 = 0.05
         up = df[df.close >= df.open]
@@ -241,11 +241,9 @@ class ChartTab(QWidget):
         chart.tick_params(axis='both', which='minor', labelsize=6)
         chart.tick_params(axis='both', which='major', labelsize=6)
         chart.set_xticks(chart.get_xticks(), chart.get_xticklabels(), rotation = 20, ha = 'right')
-        
+
 
         self.canvas.draw()
-
-        pass
 
 
 class HistoricalTab(QWidget):
@@ -301,19 +299,8 @@ class HistoricalTab(QWidget):
         cname = self.cb_cname.currentText()
         xsdate = self.dateEdit_sdate.text()
         xedate = self.dateEdit_edate.text()
-        sdate = ''
-        edate = ''
-        for s in xsdate:
-            if s == '/':
-                sdate += '-'
-            else:
-                sdate += s
-        for e in xedate:
-            if e == '/':
-                edate += '-'
-            else:
-                edate += e
-
+        sdate = ''.join('-' if s == '/' else s for s in xsdate)
+        edate = ''.join('-' if e == '/' else e for e in xedate)
         # print(f'{sdate} + {edate}')
         order = self.cb_orders.currentText()
         dir = self.cb_dirs.currentText()
@@ -330,7 +317,7 @@ class HistoricalTab(QWidget):
         self.table.setHorizontalHeaderLabels(self.orders)
         for r in range(rlen):
             for c in range(clen):
-                if not c == 0:
+                if c != 0:
                     self.table.setItem(r, c - 1, QTableWidgetItem(str(data[r][c])))
                 # print(data[r][c])
 
@@ -404,8 +391,7 @@ class PostgresConnectionClass:
         for c in cnames:
             print(f'[{i}]{c}')
             i = i + 1
-        cname = cnames[int(input())]
-        return cname
+        return cnames[int(input())]
 
     # Get Historical Data 回傳指定日期間歷史資料
     def getHistoricalData(self, cname, sdate, edate, order='None', dir='None'):
@@ -421,12 +407,7 @@ class PostgresConnectionClass:
         # raise NotImplementedError
 
         self.cursor.execute(sql_query)
-        # ==================================================================
-
-        # self.cursor.execute("SELECT * FROM public.containment ORDER BY date ASC, country_code ASC LIMIT 100")
-        data = self.cursor.fetchall()
-        # data = [['2022 0 1','2022 0 2'],[20,30]]  # Test Data
-        return data
+        return self.cursor.fetchall()
 
     # Draw Chart
     def drawChart(self, cname, sdate, edate):

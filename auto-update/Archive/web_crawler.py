@@ -19,7 +19,7 @@ mapping=["Bitcoin","USD Coin","Ethereum","Tether","BNB","Binance USD","XRP","Dog
 "Dai","Polkadot","TRON","Litecoin","Shiba Inu","Solana","Uniswap","Avalanche","UNUS SED LEO","Wrapped Bitcoin"]
 db=[]
 def switch_frame(target_crypto):
-    driver.get("https://www.investing.com/crypto/"+target_crypto+"/historical-data")
+    driver.get(f"https://www.investing.com/crypto/{target_crypto}/historical-data")
     time.sleep(2)
 
 driver.get("https://www.investing.com")
@@ -33,11 +33,9 @@ time.sleep(1)
 
 for i in range(20):
     switch_frame(table[i])
-    tempt=[]
-    tempt.append(mapping[i])
+    tempt = [mapping[i]]
     datas=driver.find_elements(By.XPATH,'//*[@id="curr_table"]/tbody/tr[1]')
-    for data in datas:
-        tempt.append(data.text)
+    tempt.extend(data.text for data in datas)
     db.append(tempt)
 
 for i in db:

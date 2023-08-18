@@ -201,7 +201,6 @@ class ChartTab(QWidget):
         edate = self.lineEdit_edate.text()
 
         PGC.drawChart(cname, sdate, edate)
-        pass
 
 
 class HistoricalTab(QWidget):
@@ -346,55 +345,20 @@ class PostgresConnectionClass:
         for c in cnames:
             print(f'[{i}]{c}')
             i = i + 1
-        cname = cnames[int(input())]
-        return cname
+        return cnames[int(input())]
 
     # Get Historical Data 回傳指定日期間歷史資料
     def getHistoricalData(self, cname, sdate, edate, order='None', dir='None'):
         if not self.conn:
             return []
 
-        # == Need Implementation ===========================================
-
-        # 我如何知道依哪一行排序 ?
-        # 還是現在這個 function 沒有依任意行排序的功能 ?
-        if order == 'None':
-            sql_query = f'SELECT * FROM cryptocurrency WHERE date between {sdate} and {edate}'
-        else:
-            sql_query = f'SELECT * FROM cryptocurrency WHERE date between {sdate} and {edate}'
-
+        sql_query = f'SELECT * FROM cryptocurrency WHERE date between {sdate} and {edate}'
         # sql_query = f'SELECT * FROM cryptocurrency WHERE date between {sdate} and {edate} ORDER BY {column}'
 
         # raise NotImplementedError
 
         self.cursor.execute(sql_query)
-        # ==================================================================
-
-        # self.cursor.execute("SELECT * FROM public.containment ORDER BY date ASC, country_code ASC LIMIT 100")
-        data = self.cursor.fetchall()
-        # data = [['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc'],
-        #         ['3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234', 'abc', '3234', '12341234',
-        #          'abc']]  # Test Data
-        return data
+        return self.cursor.fetchall()
 
     # Draw Chart
     def drawChart(self, cname, sdate, edate):
